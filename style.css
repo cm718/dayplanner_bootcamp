@@ -1,0 +1,14 @@
+*, body {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.dayContainer {
+    margin: 0 180px;
+}
+
+@media screen and (max-width: 700px){
+    .dayContainer {
+        margin: 0 20px;
+    }
+}
