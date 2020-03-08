@@ -1,44 +1,48 @@
-$("document").ready(() => {
+$("document").ready((event) => {
   const day = [
-    { events: "" },
-    { events: "" },
-    { events: "" },
-    { events: "" },
-    { events: "" },
-    { events: "" },
-    { events: "" },
-    { events: "" },
-    { events: "" },
-    { events: "" },
-    { events: "" },
-    { events: "" }
+    { events: "Wake up" },
+    { events: "Go to work" },
+    { events: "Code" },
+    { events: "Meeting with the boss" },
+    { events: "Eat some lunch" },
+    { events: "Walk the dog" },
+    { events: "Take a nap" },
+    { events: "Eat a snack" },
+    { events: "Drive home" },
+    { events: "Cook dinner" },
+    { events: "Put the kids to bed" },
+    { events: "Code some more" }
   ];
 
-
   const render = () => {
-      let html
-    for(let i = 7; i < 19; i++){
-        html = `
-            <div class='hour' id='${i-7}'>
-                <h2 class='mb-3' style='display:inline-block;'>${ i < 13 ? i : i - 12 }</h2>
-                <p>${day[i].events}</p>
+    let htmlBlock
+
+    for(let i = 0; i < 12; i++){
+        htmlBlock = `
+            <div class='hour py-1' id='${i}' style='display:flex; justify-content: space-between; align-items:center;'>
+                <h3 style='display:inline-block;'>${ i < 7 ? i+6 : i }</h3>
+                <h5 style="margin: 0px">${ day[i].events }</h5>
+                <button id='${i}'>Edit</button>
             </div>
             <hr/>
         `
-        $('.dayContainer').append(html)
+        $('.dayContainer').append(htmlBlock)
     }
   }
 
-  $('.dayContainer').on('click', (e)=>{
-      e.preventDefault()
-      let id = e.target.id
-      
-      let eventDesc = prompt("Please enter events for today")
-      day[id].events = eventDesc
-      localStorage.setItem('day', JSON.stringify(day))
-  })
+  $('body').on('click', event =>{
+    if(event.target.tagName == 'BUTTON'){
+        let id = event.target.id
+        let eventDesc = prompt("Please enter events for this hour")
+        day[id].events = eventDesc
+        $(`#${id} h5`).text(eventDesc)
+    } else {
+        return
+    }
+})
+  
 
   render()
 
-  const crud = () => {}
-});
+})
+
